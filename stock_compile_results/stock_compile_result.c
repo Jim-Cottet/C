@@ -5,7 +5,7 @@
 //TODO Need a refactorisation and a subdivision in several functions
 //TODO Handle real arguments instead of scans...
 
-int main()
+int main(int argc, char *argv[])
 {   
     FILE *buffer_file, *writing_file;
 
@@ -25,8 +25,13 @@ int main()
         return 1;
     }
 
-    printf("Enter the name of the file to compile: ");
-    fgets(filename, sizeof(filename), stdin);
+    if (argc != 2) {
+        printf("Usage %s <arguments>\n", argv[0]);
+        return 1;
+    }
+
+    strncpy(filename, argv[1], sizeof(filename) - 1);
+    filename[sizeof(filename) - 1] = '\0';
 
     size_t len = strlen(filename);
     if (len > 0 && filename[len-1] == '\n') {

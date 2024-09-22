@@ -22,3 +22,19 @@ hello.c:11:36: error: expected ';' before '}' token
 hello.c:13:1:
  }
  ~                                   
+hello.c: In function 'main':
+hello.c:11:36: error: expected ';' before '}' token
+     printf("a = %d, b = %d", a, b )
+                                    ^
+                                    ;
+hello.c:13:1:
+ }
+ ~                                   
+hello.c: In function 'main':
+hello.c:11:36: error: expected ';' before '}' token
+     printf("a = %d, b = %d", a, b )
+                                    ^
+                                    ;
+hello.c:13:1:
+ }
+ ~                                   
