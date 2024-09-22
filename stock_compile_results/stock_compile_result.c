@@ -1,47 +1,71 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 //TODO Need a refactorisation and a subdivision in several functions
-
-//TODO
+//TODO Handle real arguments instead of scans...
 
 int main()
 {   
-
-    FILE *buffer_file;
+    FILE *buffer_file, *writing_file;
 
     char filename[50];
     char final_command[100];
     char output[1024];
 
-    //TODO a block to verify that GCC compiler exists or not
+    //TODO Change this part to not display it but to put it into a file
+    //?A unique file with a timestamp each time we write?
+    //?If an error is corrected we display the correction?
+    //?Auto correct the the lack of semi colone?
+    //?Add a list of compilation errors at the top of the file with a count of occurrences
 
-    //TODO
+    //! How do I test this ???
+    if (system("where gcc >nul 2>&1") != 0) {
+        printf("Gcc compiler cannot be found.\n");
+        return 1;
+    }
 
     printf("Enter the name of the file to compile: ");
     fgets(filename, sizeof(filename), stdin);
 
-    snprintf(final_command, sizeof(final_command), "gcc %s", filename);
-
-    buffer_file = popen(final_command, "r");
-    if (buffer_file == NULL) {
-        printf("Failed to run command\n");
+    size_t len = strlen(filename);
+    if (len > 0 && filename[len-1] == '\n') {
+        filename[len-1] = '\0';
     }
 
-    //TODO Change this part to not display it but to put it into a file
+    snprintf(final_command, sizeof(final_command), "gcc %s > temp_output.txt 2>&1", filename);
+    printf("The command: %s\n", final_command); //! Debug line
 
-    //?Which file format?
-    //?The name of the file will be created with the timestamp?
-    //?A unique file with a timestamp each time we write?
-    //?If an error is corrected we display the correction?
-    //? Autocorrect the the lack of semi colone? 
-    //TODO
+    int ret = system(final_command);
+    if (ret >= 2) {
+        printf("Failed to run command, return code: %d\n", ret);
+       return 1;
+    }
+
+    buffer_file = fopen("temp_output.txt", "r");
+    if (buffer_file == NULL) {
+        printf("Failed to open temporary output file\n");
+        return 1;
+    }
+
+    writing_file = fopen("logs.txt", "a");
+    if (writing_file == NULL) {
+        printf("Failed to open %s for writing\n");
+        fclose(buffer_file);
+        return 1;
+    }
 
     while (fgets(output, sizeof(output), buffer_file) != NULL) {
+        fputs(output, writing_file);
         printf("%s", output);
     }
 
-    pclose(buffer_file);
+    fclose(buffer_file);
+    fclose(writing_file);
+
+    printf("Compilation output written to logs.txt");
+
+    remove("temp_output.txt");
 
     return 0;
 
