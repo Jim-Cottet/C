@@ -3,7 +3,6 @@
 #include <string.h>
 
 //TODO Need a refactorisation and a subdivision in several functions
-//TODO Handle real arguments instead of scans...
 
 int main(int argc, char *argv[])
 {   
@@ -13,11 +12,11 @@ int main(int argc, char *argv[])
     char final_command[100];
     char output[1024];
 
-    //TODO Change this part to not display it but to put it into a file
-    //?A unique file with a timestamp each time we write?
-    //?If an error is corrected we display the correction?
-    //?Auto correct the the lack of semi colone?
-    //?Add a list of compilation errors at the top of the file with a count of occurrences
+    //TODO
+    //? A unique file with a timestamp each time we write?
+    //? If an error is corrected we display the correction?
+    //? Add a list of compilation errors at the top of the file with a count of occurrences?
+    //? Add an index to each lines in the log file to make the use of informations easier?
 
     //! How do I test this ???
     if (system("where gcc >nul 2>&1") != 0) {
@@ -39,7 +38,7 @@ int main(int argc, char *argv[])
     }
 
     snprintf(final_command, sizeof(final_command), "gcc %s > temp_output.txt 2>&1", filename);
-    printf("The command: %s\n", final_command); //! Debug line
+    // printf("The command: %s\n", final_command); //! Debug line
 
     int ret = system(final_command);
     if (ret >= 2) {
