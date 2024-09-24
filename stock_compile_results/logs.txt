@@ -1,40 +1,18 @@
-hello.c: In function 'main':
-hello.c:11:36: error: expected ';' before '}' token
-     printf("a = %d, b = %d", a, b )
-                                    ^
-                                    ;
-hello.c:13:1:
- }
- ~                                   
-hello.c: In function 'main':
-hello.c:11:36: error: expected ';' before '}' token
-     printf("a = %d, b = %d", a, b )
-                                    ^
-                                    ;
-hello.c:13:1:
- }
- ~                                   
-hello.c: In function 'main':
-hello.c:11:36: error: expected ';' before '}' token
-     printf("a = %d, b = %d", a, b )
-                                    ^
-                                    ;
-hello.c:13:1:
- }
- ~                                   
-hello.c: In function 'main':
-hello.c:11:36: error: expected ';' before '}' token
-     printf("a = %d, b = %d", a, b )
-                                    ^
-                                    ;
-hello.c:13:1:
- }
- ~                                   
-hello.c: In function 'main':
-hello.c:11:36: error: expected ';' before '}' token
-     printf("a = %d, b = %d", a, b )
-                                    ^
-                                    ;
-hello.c:13:1:
- }
- ~                                   
+2024-09-22 23:01:34
+1 hello.c: In function 'main':
+2 hello.c:11:36: error: expected ';' before '}' token
+3      printf("a = %d, b = %d", a, b )
+4                                     ^
+5                                     ;
+6 hello.c:13:1:
+7  }
+8  ~                                   
+2024-09-22 23:01:51
+1 hello.c: In function 'main':
+2 hello.c:11:36: error: expected ';' before '}' token
+3      printf("a = %d, b = %d", a, b )
+4                                     ^
+5                                     ;
+6 hello.c:13:1:
+7  }
+8  ~                                   

@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 //TODO Need a refactorisation and a subdivision in several functions
 
@@ -8,17 +9,23 @@ int main(int argc, char *argv[])
 {   
     FILE *buffer_file, *writing_file;
 
+    time_t rawtime;
+    struct tm * timeinfo;
+    char time_buffer[80];
+
     char filename[50];
     char final_command[100];
     char output[1024];
+    char final_line[1024];
+
+    int i = 1;
 
     //TODO
     //? A unique file with a timestamp each time we write?
     //? If an error is corrected we display the correction?
     //? Add a list of compilation errors at the top of the file with a count of occurrences?
-    //? Add an index to each lines in the log file to make the use of informations easier?
 
-    //! How do I test this ???
+    //! How do I test this? Docker ? Other laptop? (Don't want to uninstall all my gcc...)
     if (system("where gcc >nul 2>&1") != 0) {
         printf("Gcc compiler cannot be found.\n");
         return 1;
@@ -38,7 +45,7 @@ int main(int argc, char *argv[])
     }
 
     snprintf(final_command, sizeof(final_command), "gcc %s > temp_output.txt 2>&1", filename);
-    // printf("The command: %s\n", final_command); //! Debug line
+    printf("The command: %s\n", final_command); //! Debug line
 
     int ret = system(final_command);
     if (ret >= 2) {
@@ -59,9 +66,18 @@ int main(int argc, char *argv[])
         return 1;
     }
 
+    //TODO Add a timestamp line
+    time(&rawtime);
+    timeinfo = localtime(&rawtime);
+    strftime(time_buffer, sizeof(time_buffer), "%Y-%m-%d %H:%M:%S\n", timeinfo);
+    fputs(time_buffer, writing_file);
+    //TODO
+
     while (fgets(output, sizeof(output), buffer_file) != NULL) {
-        fputs(output, writing_file);
+        snprintf(final_line, sizeof(final_line), "%d %s",i,output);
+        fputs(final_line, writing_file);
         printf("%s", output);
+        i++;
     }
 
     fclose(buffer_file);

@@ -9,6 +9,5 @@ int main()
     b = temp;
 
     printf("a = %d, b = %d", a, b )
-
 }
 
